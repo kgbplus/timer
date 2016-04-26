@@ -1,0 +1,3 @@
+#!/bin/sh
+/bin/sleep 6
+sudo python /home/pi/timer/timer.py

@@ -1,0 +1,4 @@
+@xset s noblank
+@xset s off
+@xset -dpms
+@/home/pi/planetes/startup_script
