@@ -58,6 +58,7 @@ screen.blit(bg, (0, 0))
 pygame.display.flip()
 
 running = True
+But4_pressed = False
 
 if RASPI:
   wait = pygame.image.load("/home/pi/timer/wait.png")
@@ -113,6 +114,7 @@ def play_video(video_path):
 
 def show_timer():
 
+  global But4_pressed
   counting = True
   start_mc = pygame.time.get_ticks()
 
@@ -120,6 +122,13 @@ def show_timer():
     for i in pygame.event.get():
       if i.type == QUIT or (i.type == KEYDOWN and i.key == K_ESCAPE):
         counting = False
+
+    if RASPI:
+      if(GPIO.input(But4)):
+        pygame.time.delay(80)
+        if (GPIO.input(But4)):
+          counting = False
+          But4_pressed = True
 
     screen.fill(black)
     
@@ -213,7 +222,10 @@ while running:
     play_video(win_video_path)
     show_pict(win)
   
-  wait_one_but(But4)
+  if (not But4_pressed):
+    wait_one_but(But4)
+  else:
+    But4_pressed = False
   
   for i in pygame.event.get():
    if i.type == QUIT or (i.type == KEYDOWN and i.key == K_ESCAPE):
