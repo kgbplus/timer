@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 RASPI = True
+NO_PICT = True
 
 import os, pygame
 from pygame.locals import *
@@ -56,7 +57,7 @@ bg = bg.convert()
 bg.fill(black)
 screen.blit(bg, (0, 0))
 pygame.display.flip()
-
+	
 running = True
 But4_pressed = False
 
@@ -67,10 +68,10 @@ if RASPI:
   win = pygame.image.load("/home/pi/timer/win.png")
   #other = pygame.image.load("/home/pi/timer/other.png")
 
-  intro_video_path = "/home/pi/timer/intro.avi"
-  loose_video_path = "/home/pi/timer/loose.avi"
-  win_video_path = "/home/pi/timer/win.avi"
-  other_video_path = "/home/pi/timer/other.avi"
+  intro_video_path = "/home/pi/timer/intro.mp4"
+  loose_video_path = "/home/pi/timer/loose.mp4"
+  win_video_path = "/home/pi/timer/win.mp4"
+  other_video_path = "/home/pi/timer/other.mp4"
 else:
   wait = pygame.image.load("wait.png")
   intro = pygame.image.load("intro.png")
@@ -93,7 +94,7 @@ def write(msg,color):
     mytext = myfont.render(msg, True, color)
     mytext = mytext.convert_alpha()
     return mytext
-
+	
 def exit():
   if (RASPI):
     GPIO.cleanup()
@@ -104,8 +105,11 @@ def clear_screen():
   pygame.display.flip()
   
 def show_pict(pict):
-  screen.blit(pict,[0,0])
-  pygame.display.flip()
+  if NO_PICT:
+	  clear_screen()
+  else:
+	  screen.blit(pict,[0,0])
+	  pygame.display.flip()
   
 def play_video(video_path):
   if RASPI:
